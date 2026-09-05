@@ -32,6 +32,24 @@ with `blue-light-filter`, which is installed by default.
 
 [^1]: Gradual color shifting currently unsupported.
 
+### How it works
+
+```mermaid
+flowchart LR
+    CMD["hyprshade on / off / toggle"] --> CLI["hyprshade CLI"]
+    TMR["systemd timer"] -->|"auto"| CLI
+
+    CLI --> CONF["hyprshade.toml (schedule)"]
+    CLI --> RES["Resolve shader name"]
+    RES --> DIRS["~/.config/hypr/shaders or /usr/share/hyprshade"]
+    DIRS --> SHADER["shader (.glsl)"]
+
+    CLI --> KW["hyprctl keyword decoration:screen_shader"]
+    SHADER --> KW
+    KW --> HYP["Hyprland compositor"]
+    HYP --> OUT["Screen shader applied"]
+```
+
 ## Installation
 
 ### Arch Linux
